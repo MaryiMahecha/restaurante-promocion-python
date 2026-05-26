@@ -1,0 +1,89 @@
+# ============================================
+# Problema 2: Menú de restaurante con promoción
+# Estudiante: Maryi Estefany Mahecha Perez
+# Fase 5 - Evaluación Final POA
+# ============================================
+
+# -----------------------------
+# Datos del problema
+# -----------------------------
+
+# Matriz de productos: [Nombre, Categoría, Precio Base]
+menu_restaurante = [
+    ["Lomo a la plancha", "Plato Fuerte", 45000],
+    ["Ceviche de camarón", "Entrada", 28000],
+    ["Tiramisú", "Postre", 18000],
+    ["Pollo al horno", "Plato Fuerte", 32000],
+    ["Ensalada César", "Entrada", 15000],
+    ["Helado artesanal", "Postre", 12000]
+]
+
+# Parámetros de la promoción
+CATEGORIA_OBJETIVO = "Plato Fuerte"
+UMBRAL_PRECIO = 25000
+DESCUENTO_PORCENTAJE = 0.15  # 15%
+
+# -----------------------------
+# Módulo (función) para calcular precio final
+# -----------------------------
+
+def calcular_precio_final(categoria, precio_base):
+    """
+    Calcula el precio final de un producto aplicando un 15% de descuento
+    si cumple con la categoría objetivo y el precio base supera el umbral.
+    
+    Parámetros:
+    categoria (str): Categoría del producto
+    precio_base (float): Precio base del producto
+    
+    Retorna:
+    float: Precio final después de aplicar o no la promoción
+    """
+    if categoria == CATEGORIA_OBJETIVO and precio_base > UMBRAL_PRECIO:
+        descuento = precio_base * DESCUENTO_PORCENTAJE
+        precio_final = precio_base - descuento
+        return round(precio_final, 2)
+    else:
+        return precio_base
+
+# -----------------------------
+# Mostrar resultados
+# -----------------------------
+
+def mostrar_menu_con_promocion():
+    """
+    Recorre la matriz de productos, aplica la promoción y muestra
+    el precio base y precio final de cada producto.
+    """
+    print("=" * 60)
+    print("MENÚ DEL RESTAURANTE - APLICACIÓN DE PROMOCIÓN")
+    print("=" * 60)
+    print(f"Categoría con descuento: {CATEGORIA_OBJETIVO}")
+    print(f"Descuento aplicado: {DESCUENTO_PORCENTAJE * 100}%")
+    print(f"Umbral de precio para descuento: ${UMBRAL_PRECIO:,.0f}")
+    print("-" * 60)
+    print(f"{'Producto':<25} {'Categoría':<15} {'Precio Base':>12} {'Precio Final':>12}")
+    print("-" * 60)
+    
+    for producto in menu_restaurante:
+        nombre = producto[0]
+        categoria = producto[1]
+        precio_base = producto[2]
+        precio_final = calcular_precio_final(categoria, precio_base)
+        
+        precio_base_str = f"${precio_base:,.0f}"
+        precio_final_str = f"${precio_final:,.0f}"
+        
+        if precio_final < precio_base:
+            print(f"{nombre:<25} {categoria:<15} {precio_base_str:>12} {precio_final_str:>12}  ← Descuento aplicado")
+        else:
+            print(f"{nombre:<25} {categoria:<15} {precio_base_str:>12} {precio_final_str:>12}")
+    
+    print("-" * 60)
+
+# -----------------------------
+# Ejecución principal
+# -----------------------------
+
+if __name__ == "__main__":
+    mostrar_menu_con_promocion()
